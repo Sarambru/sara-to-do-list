@@ -1,0 +1,1 @@
+The purpose of this project is to create a simple and efficient to-do list maker for busy people.
