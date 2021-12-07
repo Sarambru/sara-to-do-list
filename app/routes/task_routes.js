@@ -31,9 +31,7 @@ const router = express.Router()
 // GET /examples
 router.get('/tasks', requireToken, (req, res, next) => {
   Task.find()
-    // respond with status 200 and JSON of the examples
-    .then(tasks => res.status(200).json({ tasks: tasks }))
-    // if an error occurs, pass it to the handler
+    .then((task) => res.json({ task }))
     .catch(next)
 })
 
@@ -52,11 +50,12 @@ router.get('/tasks/:id', requireToken, (req, res, next) => {
 // CREATE
 // POST /tasks
 router.post('/tasks', requireToken, (req, res, next) => {
+  const taskData = req.body.task
   // set owner of new example to be current user
   req.body.task.owner = req.user.id
 
-  Task.create(req.body.task)
-    // respond to successful `create` with status 201 and JSON of new "example"
+  Task.create(taskData)
+  // respond to successful `create` with status 201 and JSON of new "example"
     .then(task => {
       res.status(201).json({ task })
     })
